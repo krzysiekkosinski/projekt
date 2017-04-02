@@ -1,0 +1,160 @@
+<h1 class="page-header">Dodawanie sprawozdania:</h1>
+<div class="col-lg-6">
+    <form enctype="multipart/form-data" action="<?= $this->url('sprawozdanie', array('action' => 'dodaj', 'id' => $mecz->id_mecz)); ?>" method="post">
+
+
+        <div class="form-group">
+            <label>Data spotkania:</label>
+
+            <?= $mecz->data; ?>
+        </div>
+        <div class="form-group">
+            <label>Godzina:</label>
+            <?= $mecz->godzina; ?>
+        </div>
+        <div class="form-group">
+            <label>Miejsce spotkania:</label>
+            <?= $mecz->miejsce; ?>
+        </div> 
+
+        <div class="form-group">
+            <label>Gospodarz:</label>
+            <?php foreach ($gospodarz as $klub) {
+                if ($klub->id_zespol == $mecz->gospodarze) {
+                    $gospodarz = $klub->nazwa_zespolu;
+                    echo($klub->nazwa_zespolu);
+                }
+            }
+            ?>  
+        </div>
+
+        <div class="form-group">
+            <label>Gość:</label>
+            <?php foreach ($gosc as $klub) {
+                if ($klub->id_zespol == $mecz->goscie) {
+                    $gosc = $klub->nazwa_zespolu;
+                    echo($klub->nazwa_zespolu);
+                }
+            }
+            ?>     
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia główny:</label>
+<?php foreach ($sedzia as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_glowny) {
+        echo($uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie);
+    }
+}
+?>     
+
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 1:</label>
+<?php foreach ($sedzia1 as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_1) {
+        echo($uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie);
+    }
+}
+?>     
+
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 2:</label>
+<?php foreach ($sedzia2 as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_2) {
+        echo($uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie);
+    }
+}
+?>     
+        </div>
+
+        <div class="form-group">
+            <label>Wynik:</label>
+<?php echo($gospodarz) ?>
+            <span> <select name="Wynik1" class="">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select> 
+            </span> : <span>
+                <select name="Wynik2" class="">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select> 
+            </span>
+<?php echo($gosc) ?>
+        </div> 
+
+        <div class="form-group">
+            <label >Bramki:</label>
+            <textarea class="form-control" rows="5" name="Bramki"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label >Skład <?php echo($gospodarz) ?>:</label> 
+            <textarea class="form-control" rows="11" wrap="physical" name="Sklad_gospodarze"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label >Skład <?php echo($gosc) ?>:</label> 
+            <textarea class="form-control" rows="11" wrap="physical" name="Sklad_goscie"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label >Żółta kartka:</label>
+            <textarea class="form-control" rows="5" name="Zolta_kartka"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label >Czerwona kartka:</label>
+            <textarea class="form-control" rows="5" name="Czerwona_kartka"></textarea>
+        </div>
+
+
+        <div class="form-group">
+            <label >Dodatkowe informacje:</label>
+            <textarea class="form-control" rows="5" name="Info"></textarea>
+        </div>
+
+
+
+        <a href="<?= $this->url('sprawozdanie', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" />
+            <button type="submit" class="btn btn-default">Zatwierdź</button>
+            <button type="reset" class="btn btn-default">Wyczyść nowe dane</button>
+        </a>
+    </form>
+</div> 
+
+
+<script type="text/javascript">
+    $("#date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
+</script>

@@ -1,0 +1,28 @@
+.cal{
+  margin-left: -53%;
+  margin-bottom: 9px;
+}
+
+@media print {
+    .fc-header-left, .fc-header-right,
+    .intercom-launcher-button, .cal, button
+    { 
+      display: none;
+    }
+}
+
+.fc-border-separate{
+  background: yellowgreen;
+}
+  
+  
+.fc-event-start {
+    width: 124px;
+    height: 107px;
+    border-radius: 0;
+    background: #fff;
+    border: 0;
+    color: #000;
+    line-height: 100px;
+    text-align: center;
+}

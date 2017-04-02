@@ -1,0 +1,66 @@
+<h1 class="page-header">Wyświetl sprawozdanie z danego spotkania:</h1>
+<div class="col-lg-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Godzina</th>
+                    <th>Miejsce spotkania</th>
+                    <th>Gospodarz</th>
+                    <th>Gość</th>
+                    <th>Sędzia główny</th>
+                    <th>Sędzia liniowy</th>
+                    <th>Sędzia liniowy</th>
+                    <th>Zaznacz</th>
+                </tr>
+            </thead>
+            <?php foreach ($mecze as $mecz) : ?>
+
+                <tr>
+                    <td><?= $this->escapeHtml($mecz->data) ?></td>
+                    <td><?= $this->escapeHtml($mecz->godzina) ?></td>
+                    <td><?= $this->escapeHtml($mecz->miejsce) ?></td>
+                    <td><?= $this->escapeHtml($mecz->gospodarze) ?></td>
+                    <td><?= $this->escapeHtml($mecz->goscie) ?></td>
+                    <td><?= $this->escapeHtml($mecz->sedzia_glowny) ?></td>
+                    <td><?= $this->escapeHtml($mecz->sedzia_liniowy_1) ?></td>
+                    <td><?= $this->escapeHtml($mecz->sedzia_liniowy_2) ?></td>
+                    <td><input type="radio" value="<?= $this->escapeHtml($mecz->id_mecz) ?>" name="choice" /></td>
+
+                </tr>
+
+            <?php endforeach; ?>
+
+
+        </table>
+
+
+    </div>
+</div>
+
+<br/>
+<br/>
+
+<a id="adresDodaj" href="<?= $this->url('podglads', array('action' => 'wyswietl')); ?>" role="button" class="btn btn-default">Wyświetl</a>&nbsp;&nbsp;
+<br/>
+<br/> 
+<script>
+
+    tekstDodaj = document.getElementById("adresDodaj").getAttributeNode("href").value;
+
+    function getCheckboxesValues() {
+        return [].slice.apply(document.querySelectorAll("input[type=radio]"))
+                .filter(function (c) {
+                    return c.checked;
+                })
+                .map(function (c) {
+                    return c.value;
+                });
+    }
+
+    $(document.querySelectorAll("input[type=radio]")).change(function () {
+        document.getElementById("adresDodaj").getAttributeNode("href").value = tekstDodaj + getCheckboxesValues();
+    });
+
+</script>    

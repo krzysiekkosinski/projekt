@@ -1,0 +1,109 @@
+<h1 class="page-header">Dodawanie nowego terminu meczu:</h1>
+
+<div class="col-lg-6">
+    <form enctype="multipart/form-data" action="<?= $this->url('mecz', array('action' => 'dodaj')); ?>" method="post">
+
+        <div class="form-group">
+            <label>Data:</label>
+            <input name="Data" type="text" id="date" class="form-control" value="" readonly required>
+        </div>
+
+        <div class="form-group">
+            <label>Godzina:</label> 
+            <input name="Godzina" type="time" class="form-control" >
+        </div> 
+
+        <div class="form-group">
+            <label>Miejsce spotkania:</label>
+            <input name="Miejsce_spotkania" class="form-control" placeholder="Miejsce spotkania"/>
+        </div> 
+
+        <div class="form-group">
+            <label>Gospodarz:</label>
+            <select name="Gospodarz" class="form-control">
+                <option value="---" disabled selected>---</option>
+                <?php foreach ($this->gospodarz as $klub) { ?>
+                    <option   value="<?= $klub->id_zespol ?>"><?= $klub->nazwa_zespolu ?></option>
+                    <?php
+                }
+                ?>
+            </select> 
+        </div>
+
+        <div class="form-group">
+            <label>Gość:</label>
+            <select name="Gosc" class="form-control">
+                <option value="---" disabled selected>---</option>           
+                <?php foreach ($this->gosc as $klub) { ?>
+                    <option value="<?= $klub->id_zespol ?>"><?= $klub->nazwa_zespolu ?></option>
+                    <?php
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia główny:</label>
+            <select name="Sedzia_glowny" class="form-control">
+                <option value="---" disabled selected>---</option>
+                <?php foreach ($this->sedzia as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 1:</label>
+            <select name="Sedzia_liniowy_1" class="form-control">
+                <option value="---" disabled selected>---</option>
+                <?php foreach ($this->sedzia1 as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 2:</label>
+            <select name="Sedzia_liniowy_2" class="form-control">
+                <option value="---" disabled selected>---</option>
+                <?php foreach ($this->sedzia2 as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+
+
+
+
+
+        <a href="<?= $this->url('mecz', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" />
+            <a href="<?= $this->url('mecz', array()); ?>"><button type="submit" class="btn btn-default">Zatwierdź</button></a>
+            <button type="reset" class="btn btn-default" onclick="return confirm('Dane zostaną zresetowane')">Wyczyść</button>
+
+    </form>
+</div>
+<script type="text/javascript">
+    $("#date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#godzina").timepicker({
+            timeFormat: 'HH:mm ',
+            interval: 60,
+            minTime: '10:00',
+            maxTime: '20:00',
+            defaultTime: '11:00',
+            startTime: '10:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });</script>
+

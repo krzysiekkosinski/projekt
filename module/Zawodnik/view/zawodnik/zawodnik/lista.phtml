@@ -1,0 +1,72 @@
+<?php if ($_SESSION['funkcja'] != 'dzialacz') : ?> 
+    <h1 class="page-header">Lista zawodników:</h1>
+<?php endif ?>
+<?php if ($_SESSION['funkcja'] == 'dzialacz') : ?> 
+    <h1 class="page-header">Lista zawodników twojego zespołu:</h1>
+<?php endif ?>
+<div class="col-lg-12">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Data urodzenia</th>
+                    <th>Klub</th>
+                    <?php if ($_SESSION['funkcja'] != 'dzialacz') : ?> 
+                        <th>Zaznacz</th>
+                    <?php endif ?>
+                </tr>
+            </thead>
+            <?php foreach ($zawodnicy as $zawodnik) : ?>
+                <tr>
+                    <td><?= $this->escapeHtml($zawodnik->z_imie) ?></td>
+                    <td><?= $this->escapeHtml($zawodnik->z_nazwisko) ?></td>
+                    <td><?= $this->escapeHtml($zawodnik->z_data_ur) ?></td>
+                    <td> <?= $this->escapeHtml($zawodnik->id_zespol) ?></td>
+                    <?php if ($_SESSION['funkcja'] != 'dzialacz') : ?> 
+                        <td><input type="radio" value="<?= $this->escapeHtml($zawodnik->id_zawodnik) ?>" name="choice" /></td>
+                    <?php endif ?>
+                </tr>
+
+            <?php endforeach; ?>
+
+
+        </table>
+
+
+    </div>
+</div>
+
+<br/>
+<br/>
+<?php if ($_SESSION['funkcja'] != 'dzialacz') : ?> 
+    <a href="<?= $this->url('zawodnik', array('action' => 'dodaj')) ?>" role="button" class="btn btn-default">Nowy</a>&nbsp;&nbsp;
+    <a id="adresEdytuj" href="<?= $this->url('zawodnik', array('action' => 'edytuj')); ?>" role="button" class="btn btn-default">Edytuj</a>&nbsp;&nbsp;
+    <a id="adresUsun" href="<?= $this->url('zawodnik', array('action' => 'usun')); ?>" role="button" class="btn btn-default" onclick="return confirm('Czy chcesz usunąć tego zawodnika?')">Usuń</a>&nbsp;&nbsp;
+<?php endif ?>
+<br/>
+<br/>
+
+
+<script>
+
+    tekstEdytuj = document.getElementById("adresEdytuj").getAttributeNode("href").value;
+    tekstUsun = document.getElementById("adresUsun").getAttributeNode("href").value;
+
+    function getCheckboxesValues() {
+        return [].slice.apply(document.querySelectorAll("input[type=radio]"))
+                .filter(function (c) {
+                    return c.checked;
+                })
+                .map(function (c) {
+                    return c.value;
+                });
+    }
+
+    $(document.querySelectorAll("input[type=radio]")).change(function () {
+        document.getElementById("adresEdytuj").getAttributeNode("href").value = tekstEdytuj + getCheckboxesValues();
+        document.getElementById("adresUsun").getAttributeNode("href").value = tekstUsun + getCheckboxesValues();
+    });
+
+</script>    

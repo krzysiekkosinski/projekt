@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>EXTRANET 2.0</title>
+
+        <link href="<?= $this->basePath() . '/css/bootstrap.min.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/plugins/metisMenu/metisMenu.min.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/sb-admin-2.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/font-awesome/css/font-awesome.min.css' ?>" rel="stylesheet" type="text/css">
+        <link href="<?= $this->basePath() . '/css/fullcalendar.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/datepicker.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/custom.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/jquery.timepicker.min.css' ?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/css/jquery.timepicker.css' ?>" rel="stylesheet">
+        <script src="<?= $this->basePath() . '/js/jquery.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/bootstrap.min.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/plugins/metisMenu/metisMenu.min.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/sb-admin-2.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/moment.min.js' ?>"></script> 
+        <script src="<?= $this->basePath() . '/js/jquery-1.9.1.min.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/jquery-ui-1.10.2.custom.min.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/jquery-ui.custom.min.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/jquery.timepicker.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/jquery.timepicker.min.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/jquery.datepair.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/datepair.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/jquery.min.js' ?>"></script>
+        <script  src="<?= $this->basePath() . '/js/bootstrap-datepicker.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/fullcalendar.min.js' ?>"></script>
+        <script src="<?= $this->basePath() . '/js/pl.js' ?>"></script>       
+    </head>
+    <body> 
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-static-top"  id="up-nav" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <p></p>
+                    <a class="navbar-brand">EXTRANET 2.0</a>
+                </div>
+                <ul class="nav navbar-top-links navbar-left">
+                    <?php if ($_SESSION['funkcja'] == 'admin') : ?>
+                    <p></p>
+                        <li>
+                            <a href='<?= $this->url('mecz', array()); ?>'><i class="fa fa-futbol-o"></i>  Zarządzanie meczami</a>
+                        </li>   
+                        <li>
+                            <a href='<?= $this->url('podglada', array()); ?>'><i class="fa fa-search"></i>  Podgląd sprawozdań</a>
+                        </li>   
+                        <li>
+                            <a href='<?= $this->url('kadra', array()); ?>'><i class="fa fa-trophy"></i>  Lista zespołów</a>
+                        </li> 
+                        <li>
+                            <a href='<?= $this->url('zawodnik', array()); ?>'><i class="fa fa-user"></i>  Lista zawodników</a>
+                        </li> 
+                        <li>
+                            <a href='<?= $this->url('sedzia', array()); ?>'><i class="fa fa-user"></i>  Lista sędziów</a>
+                        </li> 
+
+                    <?php endif ?>
+
+                    <?php if ($_SESSION['funkcja'] == 'sedzia') : ?> 
+                        <p></p>
+                        <li>
+                            <a href='<?= $this->url('sprawozdanie', array()); ?>'><i class="fa fa-pencil"></i>  Tworzenie sprawozdań</a>
+                        </li>
+                        <li>
+                            <a href='<?= $this->url('podglads', array()); ?>'><i class="fa fa-search"></i>  Podgląd sprawozdań</a>
+                        </li>   
+
+                    <?php endif ?>
+
+                    <?php if ($_SESSION['funkcja'] == 'dzialacz') : ?> 
+                        <p></p>
+                        <li>       
+                            <a href='<?= $this->url('podgladd', array()); ?>'><i class="fa fa-search"></i>  Podgląd sprawozdań</a>
+                        </li>   
+                        <li>
+                            <a href='<?= $this->url('zawodnik', array()); ?>'><i class="fa fa-search"></i>  Podgląd zawodników</a>
+                        </li> 
+                    <?php endif ?>
+
+                </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                            <i class="fa fa-user fa-fw"></i> <?= $_SESSION['name']; ?> <br><p>
+                                <?php
+                                if ($_SESSION['funkcja'] == 'admin') {
+                                   echo("administrator ");
+                                } elseif ($_SESSION['funkcja'] == 'dzialacz') {
+                                    ?>
+                                    <?=
+                                    $_SESSION['nazwa'];
+                                    echo(" ");
+                                } else {
+                                    echo("sędzia ");
+                                }?>
+                                <i class="fa fa-caret-down"></i></p>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="<?= $this->url('logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Wyloguj</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div id="page-wrapper" style="margin: auto">
+                <div class="container-fluid">
+
+                    <div class="col-lg-12">
+                    </div>
+                    <?php echo $this->content; ?>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

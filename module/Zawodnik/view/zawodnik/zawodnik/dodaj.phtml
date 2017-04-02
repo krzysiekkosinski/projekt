@@ -1,0 +1,42 @@
+<h1 class="page-header">Dodawanie nowego zawodnika</h1>
+<div class="col-lg-6">
+    <form enctype="multipart/form-data" action="<?= $this->url('zawodnik', array('action' => 'dodaj')); ?>" method="post">
+
+        <div class="form-group">
+            <label>Imie:</label>
+            <input name="Imie_zawodnika" class="form-control" placeholder="Imie"/>
+        </div>
+        <div class="form-group">
+            <label>Nazwisko:</label>
+            <input name="Nazwisko_zawodnika" class="form-control" placeholder="Nazwisko"/>
+        </div> 
+
+        <div class="form-group">
+            <label>Data urodzenia:</label>
+            <input name="Data_ur" type="text" id="date" class="span1" value="" readonly required>
+        </div>
+
+
+        <div class="form-group">
+            <label>Klub:</label>
+            <select name="Klub" class="form-control">
+                <?php foreach ($this->kluby as $klub) { ?>
+                    <option value="<?= $klub->id_zespol ?>"><?= $klub->nazwa_zespolu ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <a href="<?= $this->url('zawodnik', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" /></a>
+            <a href="<?= $this->url('zawodnik', array()); ?>"><button type="submit" class="btn btn-default">Zatwierdź</button></a>
+            <button type="reset" class="btn btn-default" onclick="return confirm('Dane zostaną zresetowane')">Wyczyść</button>
+
+    </form>
+</div>
+<script type="text/javascript">
+    $("#date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
+</script>

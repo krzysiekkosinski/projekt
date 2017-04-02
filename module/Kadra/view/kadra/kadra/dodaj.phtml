@@ -1,0 +1,16 @@
+<h1 class="page-header">Dodawanie nowego zespołu</h1>
+<div class="col-lg-6">
+    <form enctype="multipart/form-data" action="<?= $this->url('kadra', array('action' => 'dodaj')); ?>" method="post">
+
+        <div class="form-group">
+            <label>Nazwa klubu:</label>
+            <input name="Nazwa_zespolu" class="form-control" placeholder="Nazwa klubu"/>
+        </div>      
+
+
+        <a href="<?= $this->url('kadra', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" />
+            <a href="<?= $this->url('kadra', array()); ?>"><button type="submit" class="btn btn-default">Zatwierdź</button></a>
+            <button type="reset" class="btn btn-default" onclick="return confirm('Dane zostaną zresetowane')">Wyczyść</button>
+
+    </form>
+</div>

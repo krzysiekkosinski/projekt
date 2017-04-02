@@ -1,0 +1,90 @@
+<h1 class="page-header">Edycja terminu/drużyn/sędziów</h1>
+<div class="col-lg-6">
+    <form enctype="multipart/form-data" action="<?= $this->url('mecz', array('action' => 'edytuj', 'id' => $mecz->id_mecz)); ?>" method="post">
+
+
+        <div class="form-group">
+            <label>Data spotkania:</label>
+            <input name="Data" type="text" id="date" class="form-control" value="<?= $mecz->data; ?>" readonly required>
+        </div>
+        <div class="form-group">
+            <label>Godzina:</label>
+            <input name="Godzina" class="form-control" placeholder="Godzina" value="<?= $mecz->godzina; ?>" />
+        </div>
+        <div class="form-group">
+            <label>Miejsce spotkania:</label>
+            <input name="Miejsce_spotkania" class="form-control" placeholder="Miejsce spotkania" value="<?= $mecz->miejsce; ?>"/>
+        </div> 
+
+        <div class="form-group">
+            <label>Gospodarz:</label>
+            <select name="Gospodarz" class="form-control">
+                <?php foreach ($gospodarz as $klub) { ?>
+                    <option value="<?= $klub->id_zespol ?>" <?php if ($klub->id_zespol == $mecz->gospodarze) {
+                    echo 'selected';
+                } ?>><?= $klub->nazwa_zespolu ?></option>
+<?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Gość:</label>
+            <select name="Gosc" class="form-control">
+                <?php foreach ($gosc as $klub) { ?>
+                    <option value="<?= $klub->id_zespol ?>" <?php if ($klub->id_zespol == $mecz->goscie) {
+                    echo 'selected';
+                } ?>><?= $klub->nazwa_zespolu ?></option>
+<?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia główny:</label>
+            <select name="Sedzia_glowny" class="form-control">
+<?php foreach ($sedzia as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>" <?php if ($uzytkownik->id_uzytkownik == $mecz->sedzia_glowny) {
+        echo 'selected';
+    } ?>><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 1:</label>
+            <select name="Sedzia_liniowy_1" class="form-control">
+<?php foreach ($sedzia1 as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>" <?php if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_1) {
+        echo 'selected';
+    } ?>><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sędzia asystent 2:</label>
+            <select name="Sedzia_liniowy_2" class="form-control">
+<?php foreach ($sedzia2 as $uzytkownik) { ?>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>" <?php if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_2) {
+        echo 'selected';
+    } ?>><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
+<?php } ?>
+            </select>
+        </div>
+
+
+        <a href="<?= $this->url('mecz', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" />
+            <button type="submit" class="btn btn-default">Zatwierdź</button>
+            <button type="reset" class="btn btn-default">Wyczyść nowe dane</button>
+
+    </form>
+</div> 
+
+
+<script type="text/javascript">
+    $("#date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
+</script>

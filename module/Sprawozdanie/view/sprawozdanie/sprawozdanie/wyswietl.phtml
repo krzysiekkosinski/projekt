@@ -1,0 +1,152 @@
+<!--Sprawozdanie meczowe-->
+
+<!--Data spotkania-->
+<?= $mecz->data; ?>
+
+<!--Godzina-->
+<?= $mecz->godzina; ?>
+
+<!--Miejsce spotkania-->
+<?= $mecz->miejsce; ?>
+
+<!--Gospodarz-->
+<?php
+foreach ($gospodarz as $klub) {
+    if ($klub->id_zespol == $mecz->gospodarze) {
+        $gospodarz = $klub->nazwa_zespolu;
+    }
+}
+?>  
+
+<!--Gość-->
+<?php
+foreach ($gosc as $klub) {
+    if ($klub->id_zespol == $mecz->goscie) {
+        $gosc = $klub->nazwa_zespolu;
+    }
+}
+?>     
+
+<!--Sędzia główny-->
+<?php
+foreach ($sedzia as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_glowny) {
+        $sedzia_gl = $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie;
+    }
+}
+?>     
+
+<!--Sędzia asystent 1-->
+<?php
+foreach ($sedzia1 as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_1) {
+        $sedzia_l_1 = $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie;
+    }
+}
+?>     
+
+<!--Sędzia asystent 2-->
+<?php
+foreach ($sedzia2 as $uzytkownik) {
+    if ($uzytkownik->id_uzytkownik == $mecz->sedzia_liniowy_2) {
+        $sedzia_l_2 = $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie;
+    }
+}
+?>     
+
+<!--Wynik spotkania-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $wyn = $sprawozdanie->wynik;
+?>
+
+<!--Bramki-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->bramki;
+?>
+
+<!--Skład gospodarze-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->sklad_gospodarze;
+?>
+
+<!--Skład goście-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->sklad_goscie;
+?>
+
+<!--Żółta kartka:-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->zolta_kartka;
+?>
+
+<!--Czerwona kartka-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->czerwona_kartka;
+?>
+
+
+<!--Dodatkowe informacje-->
+<?php
+if ($mecz->id_mecz == $sprawozdanie->id_mecz)
+    $sprawozdanie->dodatkowe_informacje;
+?>
+
+<?php
+require('tfpdf.php');
+
+$pdf = new tFPDF();
+$pdf->Open();
+$pdf->AddPage();
+$pdf->Image('http://images84.fotosik.pl/276/545322d7aa7875f2med.png', 0, 0, 210, 297, 'PNG');
+$pdf->SetTitle('EXTRANET 2.0');
+$pdf->AddFont('DejaVu', '', 'DejaVuSans.ttf', true);
+$pdf->SetFont('DejaVu', '', 18);
+$pdf->Image('http://images83.fotosik.pl/276/4d807645f44269c5med.png', 90, 2, 30, 30, 'PNG');
+$pdf->Text(66, 40, 'Sprawozdanie meczowe: ');
+$pdf->SetFont('DejaVu', '', 11);
+$pdf->Text(8, 50, 'Data spotkania: ' . $mecz->data);
+$pdf->Text(8, 60, 'Godzina: ' . $mecz->godzina);
+$pdf->Text(8, 70, 'Miejsce spotkania: ' . $mecz->miejsce);
+$pdf->Text(8, 80, 'Gospodarz: ' . $gospodarz);
+$pdf->Text(8, 90, 'Gość: ' . $gosc);
+$pdf->Text(8, 100, 'Sędzia główny: ' . $sedzia_gl);
+$pdf->Text(8, 110, 'Sędzia asystent 1: ' . $sedzia_l_1);
+$pdf->Text(8, 120, 'Sędzia asystent 2: ' . $sedzia_l_2);
+$pdf->Text(8, 130, 'Wynik spotkania: ' . $gospodarz . ' ' . $wyn . ' ' . $gosc);
+if (($sprawozdanie->bramki) == NULL) {
+    $pdf->Text(8, 140, 'Bramki: -');
+} else {
+    $pdf->Text(8, 140, 'Bramki: ' . $sprawozdanie->bramki);
+}
+$pdf->Text(8, 150, 'Skład ' . $gospodarz . ':');
+$pdf->SetXY(8, 153);
+$pdf->Multicell(0, 4, $sprawozdanie->sklad_gospodarze, 0, 'J', 0);
+$pdf->Text(8, 205, 'Skład ' . $gosc . ':');
+$pdf->SetXY(8, 208);
+$pdf->Multicell(0, 4, $sprawozdanie->sklad_goscie, 0, 'J', 0);
+if (($sprawozdanie->zolta_kartka) == NULL) {
+    $pdf->Text(8, 260, 'Żółta kartka: -');
+} else {
+    $pdf->Text(8, 260, 'Żółta kartka: ' . $sprawozdanie->zolta_kartka);
+}
+if (($sprawozdanie->czerwona_kartka) == NULL) {
+    $pdf->Text(8, 270, 'Czerwona kartka: -');
+} else {
+    $pdf->Text(8, 270, 'Czerwona kartka: ' . $sprawozdanie->czerwona_kartka);
+}
+if (($sprawozdanie->dodatkowe_informacje) == NULL) {
+    $pdf->Text(8, 280, 'Dodatkowe informacje: -');
+} else {
+    $pdf->Text(8, 280, 'Dodatkowe informacje: ' . $sprawozdanie->dodatkowe_informacje);
+}
+ob_end_clean();
+$pdf->Output();
+?>         
+
+
